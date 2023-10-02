@@ -1,59 +1,30 @@
-import { StyleSheet, Text, View, Platform, Image, TouchableOpacity} from 'react-native';
-import { Button, Icon } from 'native-base';
-import AppBar from "./src/Components/AppBar/AppBar.js";
-import { color } from 'native-base/lib/typescript/theme/styled-system.js';
+import {StyleSheet} from "react-native"
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import LandingPage from './src/Screens/LandingPage/LandingPage.jsx';
+import StatusPage from "./src/Screens/StatusPage/StatusPage.jsx";
 
-export default function App() {
-  return (
-      <View style={styles.safe}>
-          <AppBar title="Statify"/>
-          <View style={styles.container}>
-            <Text style={styles.title}>Please Log in to use Statify</Text>
-            <TouchableOpacity style={styles.likeButton}>
-              <View style={styles.buttonContainer}>
-                <Image style={{width: 25, height: 25}} source={require('./assets/logo.svg')}></Image>
-                <Text style={{color: "white"}}>Here</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-      </View>
-  );
+const Stack = createNativeStackNavigator();
+const styles = StyleSheet.create({
+  drawer:{
+    backgroundColor: "#1ED760",
+    color: "black"
+  }
+})
+const navigatorOptions = {
+        headerTintColor: 'black',
+        headerStyle: {
+          backgroundColor: '#1ED760',
+        }
 }
 
-const styles = StyleSheet.create({
-  safe:{
-    flex: 1,
-    paddingTop: Platform.OS === 'android' ? 25 : 0,
-  },
-  container: {
-    flex: 1,
-    backgroundColor: '#1e1e1e',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 16
-  },
-  likeButton:{
-    padding: 12,
-    borderRadius: 8,
-    backgroundColor: "#1ED760",
-  },
-  buttonContainer:{
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    gap: 2
-  },
-  title:{
-    color: 'white',
-    fontSize: 28,
-    textAlign: 'center'
-  },
-  image:{
-    width: 30,
-    height: 30,
-  },
-  button:{
-    flexDirection: 'row'
-  },
-
-});
+export default function App({ navigation }) {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator screenOptions={ navigatorOptions}>
+        <Stack.Screen name='Landing' options={{title: "Statify"}} component={LandingPage}/>
+        <Stack.Screen name='Status' component={StatusPage}/>
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
